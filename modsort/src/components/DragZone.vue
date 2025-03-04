@@ -102,226 +102,236 @@
 }
 </style>
 <template>
-    <section class="section">
+  <section class="section">
     <div class="container">
       <div class="drag">
-    <div>
-      <!-- settings -->
-      <div class="settings" v-if="showSettings">
-        <b-field label="folder level">
-          <b-input v-model="folderLevel"></b-input>
-        </b-field>
-      </div>
-      <!-- tiles -->
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-success" ref="t1">
-            <p class="title">T1</p>
-            <p class="subtitle">_t1.nii.gz</p>
-            <div class="boxi"></div>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-danger" ref="t1c">
-            <p class="title">T1c</p>
-            <p class="subtitle">_t1c.nii.gz</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-info" ref="t2">
-            <p class="title">T2</p>
-            <p class="subtitle">_t2.nii.gz</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-primary " ref="flair">
-            <p class="title">FLAIR</p>
-            <p class="subtitle">_fla.nii.gz</p>
-          </article>
-        </div>
-      </div>
-
-      <!-- second sequences -->
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-success"
-            id="swi"
-            ref="swi"
-          >
-            <p class="title">swi</p>
-            <p class="subtitle">_swi.nii.gz</p>
-            <div class="boxi"></div>
-          </article>
-        </div>
-
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-danger"
-            id="dwi"
-            ref="dwi"
-          >
-            <p class="title">dwi</p>
-            <p class="subtitle">_dwi.nii.gz</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-info"
-            id="adc"
-            ref="adc"
-          >
-            <p class="title">adc</p>
-            <p class="subtitle">_adc.nii.gz</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-primary"
-            id="rcbv"
-            ref="rcbv"
-          >
-            <p class="title">rcbv</p>
-            <p class="subtitle">_rcbv.nii.gz</p>
-          </article>
-        </div>
-      </div>
-
-      <!-- nothing row -->
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-warning" ref="nothing">
-            <p class="title">nothing</p>
-            <p class="subtitle">no modality at all</p>
-            <div class="boxi"></div>
-          </article>
-        </div>
-
-        <div class="tile is-parent">
-          <article class="tile is-child notification" id="review" ref="review">
-            <p class="title">review</p>
-            <p class="subtitle">.review</p>
-          </article>
-        </div>
-
-        <div class="tile is-parent">
-          <article class="tile is-child notification" ref="settings">
-            <!-- settings wheel -->
-
-            <div id="settingsiconframe">
-              <span
-                id="settingswheel"
-                class="mdi mdi-ship-wheel"
-                @click="this.toggleShowSettings"
-              ></span>
-
-              <p class="title">settings</p>
-              <p class="subtitle">control everything here</p>
+        <div>
+          <!-- settings -->
+          <div class="settings" v-if="showSettings">
+            <b-field label="folder level">
+              <b-input v-model="folderLevel"></b-input>
+            </b-field>
+          </div>
+          <!-- tiles -->
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <article class="tile is-child notification is-success" ref="t1">
+                <p class="title">T1</p>
+                <p class="subtitle">_t1.nii.gz</p>
+                <div class="boxi"></div>
+              </article>
             </div>
-          </article>
+            <div class="tile is-parent">
+              <article class="tile is-child notification is-danger" ref="t1c">
+                <p class="title">T1c</p>
+                <p class="subtitle">_t1c.nii.gz</p>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification is-info" ref="t2">
+                <p class="title">T2</p>
+                <p class="subtitle">_t2.nii.gz</p>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-primary"
+                ref="flair"
+              >
+                <p class="title">FLAIR</p>
+                <p class="subtitle">_fla.nii.gz</p>
+              </article>
+            </div>
+          </div>
+
+          <!-- second sequences -->
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-success"
+                id="swi"
+                ref="swi"
+              >
+                <p class="title">swi</p>
+                <p class="subtitle">_swi.nii.gz</p>
+                <div class="boxi"></div>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-danger"
+                id="dwi"
+                ref="dwi"
+              >
+                <p class="title">dwi</p>
+                <p class="subtitle">_dwi.nii.gz</p>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-info"
+                id="adc"
+                ref="adc"
+              >
+                <p class="title">adc</p>
+                <p class="subtitle">_adc.nii.gz</p>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-primary"
+                id="rcbv"
+                ref="rcbv"
+              >
+                <p class="title">rcbv</p>
+                <p class="subtitle">_rcbv.nii.gz</p>
+              </article>
+            </div>
+          </div>
+
+          <!-- nothing row -->
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-warning"
+                ref="nothing"
+              >
+                <p class="title">nothing</p>
+                <p class="subtitle">no modality at all</p>
+                <div class="boxi"></div>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification"
+                id="review"
+                ref="review"
+              >
+                <p class="title">review</p>
+                <p class="subtitle">.review</p>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article class="tile is-child notification" ref="settings">
+                <!-- settings wheel -->
+
+                <div id="settingsiconframe">
+                  <span
+                    id="settingswheel"
+                    class="mdi mdi-ship-wheel"
+                    @click="this.toggleShowSettings"
+                  ></span>
+
+                  <p class="title">settings</p>
+                  <p class="subtitle">control everything here</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- no standard tiles -->
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification has-text-success"
+                id="no_t1"
+                ref="no_t1"
+              >
+                <p class="title">no T1</p>
+                <p class="subtitle">no_t1.btk</p>
+                <div class="boxi"></div>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-danger"
+                id="no_t1c"
+                ref="no_t1c"
+              >
+                <p class="title">no T1c</p>
+                <p class="subtitle">no_t1c.btk</p>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-info"
+                id="no_t2"
+                ref="no_t2"
+              >
+                <p class="title">no T2</p>
+                <p class="subtitle">no_t2.btk</p>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-primary"
+                id="no_flair"
+                ref="no_flair"
+              >
+                <p class="title">no FLAIR</p>
+                <p class="subtitle">no_fla.btk</p>
+              </article>
+            </div>
+          </div>
+
+          <!-- no standard tiles -->
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification has-text-success"
+                id="no_swi"
+                ref="no_swi"
+              >
+                <p class="title">no swi</p>
+                <p class="subtitle">no_swi.btk</p>
+                <div class="boxi"></div>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-danger"
+                id="no_dwi"
+                ref="no_dwi"
+              >
+                <p class="title">no dwi</p>
+                <p class="subtitle">no_dwi.btk</p>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-info"
+                id="no_adc"
+                ref="no_adc"
+              >
+                <p class="title">no adc</p>
+                <p class="subtitle">no_adc.btk</p>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article
+                class="tile is-child notification is-primary"
+                id="no_rcbv"
+                ref="no_rcbv"
+              >
+                <p class="title">no rcbv</p>
+                <p class="subtitle">no_rcbv.btk</p>
+              </article>
+            </div>
+          </div>
+
+          <!-- end -->
         </div>
       </div>
-
-      <!-- no standard tiles -->
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification has-text-success"
-            id="no_t1"
-            ref="no_t1"
-          >
-            <p class="title">no T1</p>
-            <p class="subtitle">no_t1.btk</p>
-            <div class="boxi"></div>
-          </article>
-        </div>
-
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-danger"
-            id="no_t1c"
-            ref="no_t1c"
-          >
-            <p class="title">no T1c</p>
-            <p class="subtitle">no_t1c.btk</p>
-          </article>
-        </div>
-
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-info"
-            id="no_t2"
-            ref="no_t2"
-          >
-            <p class="title">no T2</p>
-            <p class="subtitle">no_t2.btk</p>
-          </article>
-        </div>
-
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-primary"
-            id="no_flair"
-            ref="no_flair"
-          >
-            <p class="title">no FLAIR</p>
-            <p class="subtitle">no_fla.btk</p>
-          </article>
-        </div>
-      </div>
-
-      <!-- no standard tiles -->
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification has-text-success"
-            id="no_swi"
-            ref="no_swi"
-          >
-            <p class="title">no swi</p>
-            <p class="subtitle">no_swi.btk</p>
-            <div class="boxi"></div>
-          </article>
-        </div>
-
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-danger"
-            id="no_dwi"
-            ref="no_dwi"
-          >
-            <p class="title">no dwi</p>
-            <p class="subtitle">no_dwi.btk</p>
-          </article>
-        </div>
-
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-info"
-            id="no_adc"
-            ref="no_adc"
-          >
-            <p class="title">no adc</p>
-            <p class="subtitle">no_adc.btk</p>
-          </article>
-        </div>
-
-        <div class="tile is-parent">
-          <article
-            class="tile is-child notification is-primary"
-            id="no_rcbv"
-            ref="no_rcbv"
-          >
-            <p class="title">no rcbv</p>
-            <p class="subtitle">no_rcbv.btk</p>
-          </article>
-        </div>
-      </div>
-
-      <!-- end -->
     </div>
-  </div>
-</div>
   </section>
 </template>
 
@@ -369,7 +379,7 @@ export default {
         "dragleave",
         "drop",
       ].forEach(
-        function(evt) {
+        function (evt) {
           /*
             For each event add an event listener that prevents the default action
             (opening the file in the browser) and stop the propagation of the event (so
@@ -378,7 +388,7 @@ export default {
           //  t1
           this.$refs.t1.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -387,7 +397,7 @@ export default {
           //  t1c
           this.$refs.t1c.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -396,7 +406,7 @@ export default {
           //  t2
           this.$refs.t2.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -405,7 +415,7 @@ export default {
           //  flair
           this.$refs.flair.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -415,7 +425,7 @@ export default {
           //  swi
           this.$refs.swi.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -424,7 +434,7 @@ export default {
           //  dwi
           this.$refs.dwi.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -433,7 +443,7 @@ export default {
           //  adc
           this.$refs.adc.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -442,7 +452,7 @@ export default {
           //  rcbv
           this.$refs.rcbv.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -452,7 +462,7 @@ export default {
           //  nothing
           this.$refs.nothing.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -462,7 +472,7 @@ export default {
           // review
           this.$refs.review.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -472,7 +482,7 @@ export default {
           //  no t1
           this.$refs.no_t1.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -481,7 +491,7 @@ export default {
           //  no t1c
           this.$refs.no_t1c.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -490,7 +500,7 @@ export default {
           //  no t2
           this.$refs.no_t2.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -499,7 +509,7 @@ export default {
           //  no flair
           this.$refs.no_flair.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -509,7 +519,7 @@ export default {
           //  no swi
           this.$refs.no_swi.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -518,7 +528,7 @@ export default {
           //  no dwi
           this.$refs.no_dwi.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -527,7 +537,7 @@ export default {
           //  no adc
           this.$refs.no_adc.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -536,7 +546,7 @@ export default {
           //  no rcbv
           this.$refs.no_rcbv.addEventListener(
             evt,
-            function(e) {
+            function (e) {
               e.preventDefault();
               e.stopPropagation();
             }.bind(this),
@@ -553,7 +563,7 @@ export default {
       //    t1
       this.$refs.t1.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -574,7 +584,7 @@ export default {
       //    t1c
       this.$refs.t1c.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -595,7 +605,7 @@ export default {
       //    t2
       this.$refs.t2.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -616,7 +626,7 @@ export default {
       //    flair
       this.$refs.flair.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -638,7 +648,7 @@ export default {
       //    swi
       this.$refs.swi.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -659,7 +669,7 @@ export default {
       //    dwi
       this.$refs.dwi.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -680,7 +690,7 @@ export default {
       //    adc
       this.$refs.adc.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -701,7 +711,7 @@ export default {
       //    rcbv
       this.$refs.rcbv.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -723,7 +733,7 @@ export default {
       //    nothing
       this.$refs.nothing.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -745,7 +755,7 @@ export default {
       //    review
       this.$refs.review.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -764,7 +774,7 @@ export default {
       //    no t1
       this.$refs.no_t1.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -782,7 +792,7 @@ export default {
       //    no t1c
       this.$refs.no_t1c.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -800,7 +810,7 @@ export default {
       //   no t2
       this.$refs.no_t2.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -818,7 +828,7 @@ export default {
       //    no flair
       this.$refs.no_flair.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -837,7 +847,7 @@ export default {
       //    no swi
       this.$refs.no_swi.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -855,7 +865,7 @@ export default {
       //    no dwi
       this.$refs.no_dwi.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -873,7 +883,7 @@ export default {
       //   no adc
       this.$refs.no_adc.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -891,7 +901,7 @@ export default {
       //    np rcbv
       this.$refs.no_rcbv.addEventListener(
         "drop",
-        function(e) {
+        function (e) {
           /*
             Capture the files from the drop event and add them to our local files
             array.
@@ -940,7 +950,8 @@ export default {
       );
     },
     copyMachine(file, ending, folderLevel) {
-      var os = require("os");
+      const os = window.electron.os;
+      const path = window.electron.path;
 
       console.log(os.type()); // "Windows_NT"
       console.log(os.release()); // "10.0.14393"
@@ -982,14 +993,14 @@ export default {
 
       var tarFile = path.join(tarFolder, "/", examName + "_btk_RAW/", newName);
       console.log("tarFile:", tarFile);
-      // copy
-      ipcRenderer.send("copyNii", srcFile, tarFile);
-      ipcRenderer.on("copyNiiComplete", (event, arg) => {
-        console.log("successfully copied:", arg); // prints "pong"
+      window.electron.ipcRenderer.send("copyNii", srcFile, tarFile);
+      window.electron.ipcRenderer.on("copyNiiComplete", (event, arg) => {
+        console.log("successfully copied:", arg);
       });
     },
     dotFileCreator(inputFile, dotFileName, folderLevel) {
-      // tarFolder
+      const path = window.electron.path;
+
       var tarFolder = path.dirname(inputFile);
       console.log(inputFile);
       if (folderLevel != "") {
@@ -1006,10 +1017,9 @@ export default {
       );
       console.log("tarFile:", tarFile);
 
-      // send fs request
-      ipcRenderer.send("createFile", tarFile);
-      ipcRenderer.on("createFileComplete", (event, arg) => {
-        console.log("successfully created:", arg); // prints "pong"
+      window.electron.ipcRenderer.send("createFile", tarFile);
+      window.electron.ipcRenderer.on("createFileComplete", (event, arg) => {
+        console.log("successfully created:", arg);
       });
     },
   },

@@ -1,8 +1,8 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import fs from 'fs-extra'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-// const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // The built directory structure
@@ -25,15 +25,29 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 
 
 let win: BrowserWindow | null
 
+// Use the absolute path to the preload script
+const PRELOAD_PATH = path.join(__dirname, '..', 'preload.cjs');
+
+console.log('Preload script path:', PRELOAD_PATH);
+console.log('Does preload script exist?', fs.existsSync(PRELOAD_PATH)); // Debug info
+
 function createWindow() {
   win = new BrowserWindow({
-    // width: 1600,
-    // height: 800,
+    width: 1600,
+    height: 600,
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.mjs'),
+      preload: PRELOAD_PATH,
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: false, // Required for older versions of Electron with CommonJS
     },
   })
+
+  // Add error handling for preload
+  win.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    console.error('Page failed to load:', errorCode, errorDescription);
+  });
 
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
@@ -42,8 +56,8 @@ function createWindow() {
 
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
+    win.webContents.openDevTools(); // Open DevTools by default
   } else {
-    // win.loadFile('dist/index.html')
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 }
@@ -67,3 +81,40 @@ app.on('activate', () => {
 })
 
 app.whenReady().then(createWindow)
+
+// Add this to detect uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught exception:', error);
+});
+
+// Integrate logic from background.jsith the preload script
+ipcMain.on("copyNii", (event, src, dst) => {
+  console.log("calling copyNii")
+  console.log("coping:", src, "to:", dst)
+  fs.ensureDirSync(path.dirname(dst))
+  fs.copyFile(src, dst, err => {
+    if (err) throw err
+    console.log(src, "was copied to destination:", dst)
+  })
+  event.reply("copyNiiComplete", dst)
+})
+
+ipcMain.on("createFile", (event, dst) => {
+  console.log("calling createFile")
+  console.log("creating:", dst)
+
+  // ensure folder existence
+  fs.ensureDirSync(path.dirname(dst))
+
+  fs.open(dst, "w", function(err, file) {
+    if (err) throw err
+    console.log("created:", dst)
+  })
+
+  event.reply("createFileComplete", dst)
+})
+
+// Add a listener for messages from the renderer
+ipcMain.on('message-from-renderer', (event, message) => {
+  console.log('Received message from renderer:', message);
+});
