@@ -4,6 +4,7 @@ import App from './App.vue';
 import Buefy from 'buefy';
 import './style.css';
 
+import "@mdi/font/css/materialdesignicons.css";
 import 'buefy/dist/buefy.css';
 
 const app = createApp(App);
