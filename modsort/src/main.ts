@@ -1,8 +1,16 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 
-createApp(App).mount('#app').$nextTick(() => {
+import Buefy from 'buefy';
+import './style.css';
+
+import 'buefy/dist/buefy.css';
+
+const app = createApp(App);
+
+app.use(Buefy);
+
+app.mount('#app').$nextTick(() => {
   // Use contextBridge
   window.ipcRenderer.on('main-process-message', (_event, message) => {
     console.log(message)
