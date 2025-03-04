@@ -350,7 +350,7 @@ export default {
     return {
       dragAndDropCapable: false,
       files: [],
-      folderLevel: "/..", // one directory up
+      folderLevel: "/", // one directory up
       showSettings: false,
     };
   },
