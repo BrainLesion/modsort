@@ -4,6 +4,16 @@ const path = require('path');
 
 console.log('Preload script is running!');
 
+// Add debug logging for IPC events
+const originalOn = ipcRenderer.on;
+ipcRenderer.on = function(channel, listener) {
+  console.log(`Setting up listener for channel: ${channel}`);
+  return originalOn.call(ipcRenderer, channel, (event, ...args) => {
+    console.log(`Received event on channel ${channel} with args:`, JSON.stringify(args));
+    return listener(event, ...args);
+  });
+};
+
 // Expose APIs to the renderer process
 contextBridge.exposeInMainWorld('electron', {
   os: {
@@ -20,10 +30,14 @@ contextBridge.exposeInMainWorld('electron', {
   },
   ipcRenderer: {
     on: (channel, callback) => {
-      ipcRenderer.on(channel, (event, ...args) => callback(...args));
+      console.log(`Setting up exposed listener for channel: ${channel}`);
+      ipcRenderer.on(channel, (event, arg) => {
+        console.log(`Forwarding event on channel ${channel} with arg:`, arg);
+        callback(arg);
+      });
     },
     once: (channel, callback) => {
-      ipcRenderer.once(channel, (event, ...args) => callback(...args));
+      ipcRenderer.once(channel, (event, arg) => callback(arg));
     },
     off: (channel, callback) => {
       ipcRenderer.removeListener(channel, callback);
