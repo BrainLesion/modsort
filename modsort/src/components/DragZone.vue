@@ -355,15 +355,17 @@ export default {
 
     // Ensure window.electron is available before setting up ipcRenderer listeners
     if (window.electron && window.electron.ipcRenderer) {
-      window.electron.ipcRenderer.on("copyNiiComplete", (event, arg) => {
+      window.electron.ipcRenderer.on("copyNiiComplete", (arg) => {
         console.log("successfully copied:", arg);
       });
 
-      window.electron.ipcRenderer.on("createFileComplete", (event, arg) => {
+      window.electron.ipcRenderer.on("createFileComplete", (arg) => {
         console.log("successfully created:", arg);
       });
     } else {
-      console.error("Electron APIs are not available - preload script did not load properly");
+      console.error(
+        "Electron APIs are not available - preload script did not load properly"
+      );
     }
   },
 
@@ -432,7 +434,11 @@ export default {
               console.log(`${ref}form`);
               console.log(e.dataTransfer.files[i]);
               const inputFile = e.dataTransfer.files[i].path;
-              if (ref.startsWith("no_") || ref === "review" || ref === "nothing") {
+              if (
+                ref.startsWith("no_") ||
+                ref === "review" ||
+                ref === "nothing"
+              ) {
                 this.dotFileCreator(inputFile, `${ref}.btk`, this.folderLevel);
               } else {
                 this.copyMachine(
