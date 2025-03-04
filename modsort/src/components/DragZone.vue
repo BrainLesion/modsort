@@ -102,7 +102,9 @@
 }
 </style>
 <template>
-  <div class="container">
+    <section class="section">
+    <div class="container">
+      <div class="drag">
     <div>
       <!-- settings -->
       <div class="settings" v-if="showSettings">
@@ -319,6 +321,8 @@
       <!-- end -->
     </div>
   </div>
+</div>
+  </section>
 </template>
 
 <script>
