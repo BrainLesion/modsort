@@ -336,16 +336,7 @@
 </template>
 
 <script>
-// const path = require("path");
-// const { ipcRenderer } = window.require("electron");
-
-// const electron = window.require("electron");
-
-// const { ipcRenderer } = require("electron");
 export default {
-  /*
-      Variables used by the drag and drop component
-    */
   data() {
     return {
       dragAndDropCapable: false,
@@ -356,567 +347,23 @@ export default {
   },
 
   mounted() {
-    /*
-        Determine if drag and drop functionality is capable in the browser
-      */
     this.dragAndDropCapable = this.determineDragAndDropCapable();
 
-    /*
-        If drag and drop capable, then we continue to bind events to our elements.
-      */
-
     if (this.dragAndDropCapable) {
-      /*
-          Listen to all of the drag events and bind an event listener to each
-          for the fileform.
-        */
-      [
-        "drag",
-        "dragstart",
-        "dragend",
-        "dragover",
-        "dragenter",
-        "dragleave",
-        "drop",
-      ].forEach(
-        function (evt) {
-          /*
-            For each event add an event listener that prevents the default action
-            (opening the file in the browser) and stop the propagation of the event (so
-            no other elements open the file in the browser)
-          */
-          //  t1
-          this.$refs.t1.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  t1c
-          this.$refs.t1c.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  t2
-          this.$refs.t2.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  flair
-          this.$refs.flair.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
+      this.setupDragAndDropListeners();
+    }
 
-          //  swi
-          this.$refs.swi.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  dwi
-          this.$refs.dwi.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  adc
-          this.$refs.adc.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  rcbv
-          this.$refs.rcbv.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
+    // Ensure window.electron is available before setting up ipcRenderer listeners
+    if (window.electron && window.electron.ipcRenderer) {
+      window.electron.ipcRenderer.on("copyNiiComplete", (event, arg) => {
+        console.log("successfully copied:", arg);
+      });
 
-          //  nothing
-          this.$refs.nothing.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-
-          // review
-          this.$refs.review.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-
-          //  no t1
-          this.$refs.no_t1.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  no t1c
-          this.$refs.no_t1c.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  no t2
-          this.$refs.no_t2.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  no flair
-          this.$refs.no_flair.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-
-          //  no swi
-          this.$refs.no_swi.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  no dwi
-          this.$refs.no_dwi.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  no adc
-          this.$refs.no_adc.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-          //  no rcbv
-          this.$refs.no_rcbv.addEventListener(
-            evt,
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }.bind(this),
-            false
-          );
-
-          //   end
-        }.bind(this)
-      );
-
-      /*
-          Add an event listener for drop to the form
-        */
-      //    t1
-      this.$refs.t1.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("t1form");
-            console.log(e.dataTransfer.files[i]);
-            this.copyMachine(
-              e.dataTransfer.files[i],
-              "_t1.nii.gz",
-              this.folderLevel
-            );
-          }
-        }.bind(this)
-      );
-      //    t1c
-      this.$refs.t1c.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("t1cform");
-            console.log(e.dataTransfer.files[i]);
-            this.copyMachine(
-              e.dataTransfer.files[i],
-              "_t1c.nii.gz",
-              this.folderLevel
-            );
-          }
-        }.bind(this)
-      );
-      //    t2
-      this.$refs.t2.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("t2form");
-            console.log(e.dataTransfer.files[i]);
-            this.copyMachine(
-              e.dataTransfer.files[i],
-              "_t2.nii.gz",
-              this.folderLevel
-            );
-          }
-        }.bind(this)
-      );
-      //    flair
-      this.$refs.flair.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("flaform");
-            console.log(e.dataTransfer.files[i]);
-            this.copyMachine(
-              e.dataTransfer.files[i],
-              "_fla.nii.gz",
-              this.folderLevel
-            );
-          }
-        }.bind(this)
-      );
-
-      //    swi
-      this.$refs.swi.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("swiform");
-            console.log(e.dataTransfer.files[i]);
-            this.copyMachine(
-              e.dataTransfer.files[i],
-              "_swi.nii.gz",
-              this.folderLevel
-            );
-          }
-        }.bind(this)
-      );
-      //    dwi
-      this.$refs.dwi.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("dwicform");
-            console.log(e.dataTransfer.files[i]);
-            this.copyMachine(
-              e.dataTransfer.files[i],
-              "_dwi.nii.gz",
-              this.folderLevel
-            );
-          }
-        }.bind(this)
-      );
-      //    adc
-      this.$refs.adc.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("adcform");
-            console.log(e.dataTransfer.files[i]);
-            this.copyMachine(
-              e.dataTransfer.files[i],
-              "_adc.nii.gz",
-              this.folderLevel
-            );
-          }
-        }.bind(this)
-      );
-      //    rcbv
-      this.$refs.rcbv.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("rcbvform");
-            console.log(e.dataTransfer.files[i]);
-            this.copyMachine(
-              e.dataTransfer.files[i],
-              "_rcbv.nii.gz",
-              this.folderLevel
-            );
-          }
-        }.bind(this)
-      );
-
-      //    nothing
-      this.$refs.nothing.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("nothing_form");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "no_t1.btk", this.folderLevel);
-            this.dotFileCreator(inputFile, "no_t1c.btk", this.folderLevel);
-            this.dotFileCreator(inputFile, "no_t2.btk", this.folderLevel);
-            this.dotFileCreator(inputFile, "no_fla.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-
-      //    review
-      this.$refs.review.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("review_form");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "review.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-
-      //    no t1
-      this.$refs.no_t1.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("no_t1form");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "no_t1.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-      //    no t1c
-      this.$refs.no_t1c.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("no_t1cform");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "no_t1c.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-      //   no t2
-      this.$refs.no_t2.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("no_t2form");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "no_t2.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-      //    no flair
-      this.$refs.no_flair.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("no_flaform");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "no_fla.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-
-      //    no swi
-      this.$refs.no_swi.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("no_swiform");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "no_swi.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-      //    no dwi
-      this.$refs.no_dwi.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("no_dwiform");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "no_dwi.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-      //   no adc
-      this.$refs.no_adc.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("no_adcform");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "no_adc.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-      //    np rcbv
-      this.$refs.no_rcbv.addEventListener(
-        "drop",
-        function (e) {
-          /*
-            Capture the files from the drop event and add them to our local files
-            array.
-          */
-
-          for (let i = 0; i < e.dataTransfer.files.length; i++) {
-            // this.files.push(e.dataTransfer.files[i]);
-            console.log("no_rcbvform");
-            console.log(e.dataTransfer.files[i]);
-            var inputFile = e.dataTransfer.files[i].path;
-            this.dotFileCreator(inputFile, "no_rcbv.btk", this.folderLevel);
-          }
-        }.bind(this)
-      );
-      //   end
+      window.electron.ipcRenderer.on("createFileComplete", (event, arg) => {
+        console.log("successfully created:", arg);
+      });
+    } else {
+      console.error("Electron APIs are not available - preload script did not load properly");
     }
   },
 
@@ -924,53 +371,101 @@ export default {
     toggleShowSettings() {
       this.showSettings = !this.showSettings;
     },
-    /*
-        Determines if the drag and drop functionality is in the
-        window
-      */
+
     determineDragAndDropCapable() {
-      /*
-          Create a test element to see if certain events
-          are present that let us do drag and drop.
-        */
       var div = document.createElement("div");
-
-      /*
-          Check to see if the `draggable` event is in the element
-          or the `ondragstart` and `ondrop` events are in the element. If
-          they are, then we have what we need for dragging and dropping files.
-
-          We also check to see if the window has `FormData` and `FileReader` objects
-          present so we can do our AJAX uploading
-        */
       return (
         ("draggable" in div || ("ondragstart" in div && "ondrop" in div)) &&
         "FormData" in window &&
         "FileReader" in window
       );
     },
+
+    setupDragAndDropListeners() {
+      const events = [
+        "drag",
+        "dragstart",
+        "dragend",
+        "dragover",
+        "dragenter",
+        "dragleave",
+        "drop",
+      ];
+
+      const refs = [
+        "t1",
+        "t1c",
+        "t2",
+        "flair",
+        "swi",
+        "dwi",
+        "adc",
+        "rcbv",
+        "nothing",
+        "review",
+        "no_t1",
+        "no_t1c",
+        "no_t2",
+        "no_flair",
+        "no_swi",
+        "no_dwi",
+        "no_adc",
+        "no_rcbv",
+      ];
+
+      refs.forEach((ref) => {
+        events.forEach((evt) => {
+          this.$refs[ref].addEventListener(
+            evt,
+            function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+            }.bind(this),
+            false
+          );
+        });
+
+        this.$refs[ref].addEventListener(
+          "drop",
+          function (e) {
+            for (let i = 0; i < e.dataTransfer.files.length; i++) {
+              console.log(`${ref}form`);
+              console.log(e.dataTransfer.files[i]);
+              const inputFile = e.dataTransfer.files[i].path;
+              if (ref.startsWith("no_") || ref === "review" || ref === "nothing") {
+                this.dotFileCreator(inputFile, `${ref}.btk`, this.folderLevel);
+              } else {
+                this.copyMachine(
+                  e.dataTransfer.files[i],
+                  `_${ref}.nii.gz`,
+                  this.folderLevel
+                );
+              }
+            }
+          }.bind(this)
+        );
+      });
+    },
+
     copyMachine(file, ending, folderLevel) {
       const os = window.electron.os;
       const path = window.electron.path;
 
-      console.log(os.type()); // "Windows_NT"
-      console.log(os.release()); // "10.0.14393"
-      console.log(os.platform()); // "win32"
+      console.log(os.type());
+      console.log(os.release());
+      console.log(os.platform());
 
-      console.log("separator:", path.sep); // "win32"
+      console.log("separator:", path.sep);
 
-      // src
       var srcFile = file.path;
       console.log("srcFile:", srcFile);
 
-      // tar
       var oldName = file.name;
       var fileNameNaked = oldName.substring(0, oldName.length - 7);
 
       var newName = fileNameNaked + ending;
       console.log("newName:", newName);
 
-      // tarFolder
       console.log("srcFile:", srcFile);
       console.log("srcFile normalized:", path.normalize(srcFile));
 
@@ -978,8 +473,6 @@ export default {
       console.log("definitelyPosix:", definitelyPosix);
 
       var tarFolder = path.dirname(definitelyPosix);
-      // var tarFolder = file.path.substring(0,);
-      // path.dirname(path.normalize(srcFile));
 
       console.log("tarFolder:", tarFolder);
 
@@ -994,17 +487,15 @@ export default {
       var tarFile = path.join(tarFolder, "/", examName + "_btk_RAW/", newName);
       console.log("tarFile:", tarFile);
       window.electron.ipcRenderer.send("copyNii", srcFile, tarFile);
-      window.electron.ipcRenderer.on("copyNiiComplete", (event, arg) => {
-        console.log("successfully copied:", arg);
-      });
     },
+
     dotFileCreator(inputFile, dotFileName, folderLevel) {
       const path = window.electron.path;
 
       var tarFolder = path.dirname(inputFile);
       console.log(inputFile);
       if (folderLevel != "") {
-        tarFolder = path.join(inputFile, folderLevel);
+        tarFolder = path.join(tarFolder, folderLevel);
       }
 
       var examName = path.basename(tarFolder);
@@ -1018,9 +509,6 @@ export default {
       console.log("tarFile:", tarFile);
 
       window.electron.ipcRenderer.send("createFile", tarFile);
-      window.electron.ipcRenderer.on("createFileComplete", (event, arg) => {
-        console.log("successfully created:", arg);
-      });
     },
   },
 };
