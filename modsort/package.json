@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "buefy": "npm:@ntohq/buefy-next@^0.2.0",
     "vue": "^3.4.21"
   },
