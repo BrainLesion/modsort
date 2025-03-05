@@ -19,11 +19,14 @@ function createWindow() {
   win = new BrowserWindow({
     width: 1600,
     height: 600,
+    icon: app.isPackaged 
+      ? path.join(process.resourcesPath, 'resources/icon.png')  // For Mac/Linux
+      : path.join(__dirname, '../resources/icon.png'),          // For development
     webPreferences: {
       preload: PRELOAD_PATH,
       nodeIntegration: false,
       contextIsolation: true,
-      sandbox: false, // Required for older versions of Electron with CommonJS
+      sandbox: false,
     },
   });
 
@@ -32,32 +35,26 @@ function createWindow() {
     console.error('Page failed to load:', errorCode, errorDescription);
   });
 
-  // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
     const message = (new Date()).toLocaleString();
-    console.log('Sending message to renderer:', message, typeof message);
-    
-    // Try with a simple string message
+    console.log('Page loaded successfully');
     win?.webContents.send('main-process-message', 'Hello from main process: ' + message);
-    
-    // Also try with a different approach
-    setTimeout(() => {
-      console.log('Sending delayed test message');
-      win?.webContents.send('main-process-message', 'Delayed test message');
-    }, 3000);
   });
 
-  if (process.env.VITE_DEV_SERVER_URL) {
-    win.loadURL(process.env.VITE_DEV_SERVER_URL);
-    win.webContents.openDevTools(); // Open DevTools by default
+  // For production, load from file
+  if (app.isPackaged) {
+    win.loadFile(path.join(__dirname, '../dist/index.html'));
   } else {
-    win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
+    // For development
+    if (process.env.VITE_DEV_SERVER_URL) {
+      win.loadURL(process.env.VITE_DEV_SERVER_URL);
+    } else {
+      win.loadFile(path.join(__dirname, '../dist/index.html'));
+    }
+    win.webContents.openDevTools();
   }
 }
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
@@ -66,8 +63,6 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
