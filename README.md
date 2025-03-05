@@ -1,4 +1,4 @@
-# modsort with vite and electron
+# modsort
 ![modsort_logo](modsort_logo/icons/modsort.png)
 
 **modsort** is a powerful tool for sorting, identifying, and tagging MR (Magnetic Resonance) sequences.  
