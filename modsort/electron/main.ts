@@ -1,12 +1,14 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import path from 'path';
 import fs from 'fs-extra';
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Use the absolute path to the preload script
-const PRELOAD_PATH = path.join(__dirname, '..', 'preload.cjs');
+const PRELOAD_PATH = app.isPackaged
+  ? path.join(process.resourcesPath, 'preload.cjs')
+  : path.join(__dirname, '../electron/preload.cjs');
 
 console.log('Preload script path:', PRELOAD_PATH);
 console.log('Does preload script exist?', fs.existsSync(PRELOAD_PATH)); // Debug info
@@ -26,7 +28,7 @@ function createWindow() {
   });
 
   // Add error handling for preload
-  win.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+  win.webContents.on('did-fail-load', (_event, errorCode, errorDescription) => {
     console.error('Page failed to load:', errorCode, errorDescription);
   });
 
@@ -79,8 +81,8 @@ process.on('uncaughtException', (error) => {
 app.whenReady().then(createWindow);
 
 // Add event handlers for the main process
-app.on('web-contents-created', (event, webContents) => {
-  webContents.on('preload-error', (event, preloadPath, error) => {
+app.on('web-contents-created', (_event, webContents) => {
+  webContents.on('preload-error', (_event, preloadPath, error) => {
     console.error('Preload script error:', preloadPath, error);
   });
 });
@@ -107,7 +109,7 @@ ipcMain.on("createFile", (event, dst) => {
   // ensure folder existence
   fs.ensureDirSync(path.dirname(dst));
 
-  fs.open(dst, "w", function(err, file) {
+  fs.open(dst, "w", function(err, _file) {
     if (err) throw err;
     console.log("created:", dst);
   });
@@ -116,6 +118,6 @@ ipcMain.on("createFile", (event, dst) => {
 });
 
 // Add a listener for messages from the renderer
-ipcMain.on('message-from-renderer', (event, message) => {
+ipcMain.on('message-from-renderer', (_event, message) => {
   console.log('Received message from renderer:', message);
 });

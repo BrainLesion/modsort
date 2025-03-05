@@ -9,7 +9,14 @@
   },
   "files": [
     "dist",
-    "dist-electron"
+    "dist-electron",
+    "electron/preload.cjs"
+  ],
+  "extraResources": [
+    {
+      "from": "electron/preload.cjs",
+      "to": "preload.cjs"
+    }
   ],
   "mac": {
     "target": [
