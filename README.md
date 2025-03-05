@@ -1,13 +1,17 @@
 # modsort with vite and electron
 ![modsort_logo](modsort_logo/icons/modsort.png)
 
-**modsort** is a manual sorting tool for MR files, allowing you to organize them easily by dragging and dropping them into designated boxes.
-Once sorted, the files are automatically copied and renamed to a relative location, ensuring consistency and eliminating typos.  
+**modsort** is a powerful tool for sorting, identifying, and tagging MR (Magnetic Resonance) sequences.  
+It allows users to manually organize medical imaging files through an intuitive drag-and-drop interface.  
 
-For efficiency, multiple files can be renamed at once using bulk mode.
-After renaming, the files can be seamlessly preprocessed with the [preprocessing module](https://github.com/BrainLesion/preprocessing).  
+Once sorted, files are automatically copied, renamed, and structured into a relative location, reducing errors and eliminating typos.  
+The bulk renaming feature streamlines workflow, making it easy to process large datasets efficiently.  
+
+**modsort** is especially useful for radiologists, researchers, and medical imaging professionals who need to classify MR sequences accurately.  
+After renaming, files can be further processed using the [preprocessing module](https://github.com/BrainLesion/preprocessing).  
 
 ![modsort_program](modsort_screenshot.png)
+
 
 
 ## important commands
