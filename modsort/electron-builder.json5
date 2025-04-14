@@ -21,9 +21,12 @@
   "mac": {
     "icon": "resources/icon.icns",
     "target": [
-      "dmg"
+      {
+        "target": "dmg",
+        "arch": ["x64", "arm64"]
+      }
     ],
-    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+    "artifactName": "${productName}-Mac-${arch}-${version}-Installer.${ext}"
   },
   "win": {
     "icon": "resources/icon.ico",
@@ -31,11 +34,12 @@
       {
         "target": "nsis",
         "arch": [
-          "x64"
+          "x64",
+          "arm64"
         ]
       }
     ],
-    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+    "artifactName": "${productName}-Windows-${arch}-${version}-Setup.${ext}"
   },
   "nsis": {
     "oneClick": false,
@@ -46,8 +50,11 @@
   "linux": {
     "icon": "resources/icon.png",
     "target": [
-      "AppImage"
+      {
+        "target": "AppImage",
+        "arch": ["x64", "arm64"]
+      }
     ],
-    "artifactName": "${productName}-Linux-${version}.${ext}"
+    "artifactName": "${productName}-Linux-${arch}-${version}.${ext}"
   }
 }
