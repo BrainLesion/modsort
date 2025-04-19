@@ -20,7 +20,6 @@
 #review {
   background-color: white;
   border: 2px solid hsl(0, 0, 0);
-
   // color: green;
 }
 
@@ -64,7 +63,7 @@
   color: hsl(204, 86%, 53%);
 }
 
-#no_flair {
+#no_fla {
   background-color: white;
   border: 2px solid hsl(256, 60%, 59%);
   color: hsl(256, 60%, 59%);
@@ -134,10 +133,7 @@
               </article>
             </div>
             <div class="tile is-parent">
-              <article
-                class="tile is-child notification is-primary"
-                ref="flair"
-              >
+              <article class="tile is-child notification is-primary" ref="fla">
                 <p class="title">FLAIR</p>
                 <p class="subtitle">_fla.nii.gz</p>
               </article>
@@ -271,8 +267,8 @@
             <div class="tile is-parent">
               <article
                 class="tile is-child notification is-primary"
-                id="no_flair"
-                ref="no_flair"
+                id="no_fla"
+                ref="no_fla"
               >
                 <p class="title">no FLAIR</p>
                 <p class="subtitle">no_fla.btk</p>
@@ -398,7 +394,7 @@ export default {
         "t1",
         "t1c",
         "t2",
-        "flair",
+        "fla",
         "swi",
         "dwi",
         "adc",
@@ -408,7 +404,7 @@ export default {
         "no_t1",
         "no_t1c",
         "no_t2",
-        "no_flair",
+        "no_fla",
         "no_swi",
         "no_dwi",
         "no_adc",
